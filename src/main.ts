@@ -1,7 +1,7 @@
 import './style.css';
 
 let button = document.getElementById('platillo1');
-let showCartButton = document.getElementById('showCart');
+let showCartButton = document.getElementById('ShowCart');
 let closeCartButton = document.getElementById('close');
 
 if (button) {

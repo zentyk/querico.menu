@@ -54,6 +54,7 @@
   grid-template-rows: auto 1fr;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  margin-right: 4em;
 }
 
 .food-items img{
@@ -107,19 +108,32 @@ h1{
   width: 180px;
 }
 
-.cartButton{
+.interactionButton{
   position: fixed;
-  height: 100px;
-  width: 100px;
-  bottom: 0px;
-  right: 10px;
+  height: 60px;
+  width: 60px; 
   background-color: #cb202d;
   color: #fff;
   border: none;
   border-radius: 100%;
-  padding: 5px 10px;
+  padding: 5px 10px; 
   font-size: 16px;
   font-weight: 600;
+}
+
+#ShowMap{
+  bottom: 60%;
+  right: 1%;
+}
+
+#ShowSocial{
+  bottom: 50%;
+  right: 1%;
+}
+
+#ShowCart{
+  bottom: 40%;
+  right: 1%;
 }
 
 #modal{
@@ -137,12 +151,42 @@ h1{
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 80%;
   transform: translate(-50%, -50%);
   background-color: #242424;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0
    15px rgba(0, 0, 0, 0.1);
+}
+
+#ModalHead{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#ModalHead h2{
+  width: 60%;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+}
+
+#ModalFooter{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cartItem{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #6f6f6f;
 }
 
 #clearCart{

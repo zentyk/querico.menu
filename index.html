@@ -37,7 +37,29 @@
         </div>
       </div>
 
-       
+      <div class="food-items">
+        <img src="./platillos/birria.jpg" alt="">
+        <div class="details">
+          <div class="details-sub">
+            <h5>Taco de Birria</h5>
+            <h2 class="price">$30</h2>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
+          <button id="platillo1">Agregar a la orden</button>
+        </div>
+      </div>
+      
+      <div class="food-items">
+        <img src="./platillos/birria.jpg" alt="">
+        <div class="details">
+          <div class="details-sub">
+            <h5>Taco de Birria</h5>
+            <h2 class="price">$30</h2>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
+          <button>Agregar a la orden</button>
+        </div>
+      </div>
       <div class="food-items">
         <img src="./platillos/birria.jpg" alt="">
         <div class="details">
@@ -62,42 +84,31 @@
         </div>
       </div>
 
-       
-      <div class="food-items">
-        <img src="./platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-      
-      <div class="food-items">
-        <img src="./platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button>Agregar a la orden</button>
-        </div>
-      </div>
-
-    <button class="cartButton" id="showCart">
-      CART
-    </button>
+      <button class="interactionButton" id="ShowMap">Map</button>
+      <button class="interactionButton" id="ShowSocial">Like</button>
+      <button class="interactionButton" id="ShowCart">CART</button>
     
     <div id="modal">
       <div id="modal-content">
-        <span id="close">&times;</span>
-        <h2>Orden</h2>
-        <div id="cart"></div>
-        <h3>Total: $<span id="total">0</span></h3>
-        <button id="clearCart">Limpiar orden</button>
+        <div id="ModalHead">
+          <span id="close">&times;</span>
+          <h2>Orden</h2>
+        </div>
+        
+        <div id="cart">
+          <div class="cartItem">
+            <div class="cartQuantity">2</div>
+            <h4>Taco de Birria</h4>
+            <h3>60</h3>
+            <button>agregar</button>
+            <span></span>
+            <button>remover</button>
+          </div>
+        <div id="ModalFooter">
+          <h3>Total: $<span id="total">0</span></h3>
+          <button id="clearCart">Ordenar</button>
+        </div>
+        
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
