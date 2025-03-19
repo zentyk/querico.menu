@@ -46,6 +46,20 @@ if(closeBankTagButton) {
     }
   });
 }
+
+let copyAccountButton = document.getElementById('copyAccount');
+if(copyAccountButton) {
+  copyAccountButton.addEventListener('click', () => {
+    let account = document.getElementById('accountNumber');
+
+    if(account) {
+      let accountText = account.innerText.replace(/\s/g, '');
+
+      navigator.clipboard.writeText(accountText);
+      alert('Cuenta copiada al portapapeles');
+    } 
+  });
+}
 //#endregion
 
 //#region Modal Map
@@ -97,6 +111,20 @@ if(closeCartButton) {
     if (modal) {
       modal.style.display = 'none';
     }
+  });
+}
+
+let orderCart = document.getElementById('orderCart');
+if(orderCart) {
+  orderCart.addEventListener('click', () => {
+    let message = "Hola, me gustaría ordenar:%0a* 2 Tacos de Birria"; 
+
+    window.open(`https://wa.me/+525619331064?text=${message}`);
+
+    let closingModal = document.getElementById(modals[1]);
+    if (closingModal) {
+      closingModal.style.display = 'none';
+    }  
   });
 }
 //#endregion
