@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logoRikoMenu.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Birria los panchos</title>
+    <title>RikoMenu - DEMO</title>
   </head>
   <body> 
     <div class="menu">
@@ -12,165 +12,98 @@
         <h1>Birria los panchos</h1>
         <h3>&mdash; Menu &mdash;</h3>
       </div>
+    </div>   
+    <!--Region Buttons-->
+    <button class="interactionButton" id="ShowMap">
+      <img src="./assets/icons/locationIcon.png" alt="location icon"/> 
+    </button>
+    
+    <button class="interactionButton" id="ShowSocial">
+      <img src="./assets/icons/likeIcon.png" alt="social icon"/>
+    </button>
+  
+    <button class="interactionButton" id="ShowBankTag">
+      <img src="./assets/icons/payIcon.png" alt="bank tag icon"/>
+    </button>
       
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <div class="food-items">
-        <img src="./assets/platillos/birria.jpg" alt="">
-        <div class="details">
-          <div class="details-sub">
-            <h5>Taco de Birria</h5>
-            <h2 class="price">$30</h2>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis facilis molestiae accusamus quidem praesentium velit sed ad voluptatum.</p>
-          <button id="platillo1">Agregar a la orden</button>
-        </div>
-      </div>
-
-      <button class="interactionButton" id="ShowMap">Map</button>
-      <button class="interactionButton" id="ShowSocial">Like</button>
-      <button class="interactionButton" id="ShowBankTag">Pay</button>
-      <button class="interactionButton" id="ShowCart">CART</button>
+    <button class="interactionButton" id="ShowCart">
+      <img src="./assets/icons/orderIcon.png" alt="cart icon"/>
+    </button>
+    <!--End Region Buttons-->
     
-      <div id="modalOrder">
-        <div id="modal-content">
-          <div id="ModalHead">
-            <span id="closeCart">&times;</span>
-            <h2>Orden</h2>
-          </div> 
-          <div id="cart">
-            <div class="cartItem">
-              <div class="cartQuantity">2</div>
-              <h4>Taco de Birria</h4>
-              <h3>60</h3>
-              <button>agregar</button>
-              <span></span>
-              <button>remover</button>
-            </div>
-            <div id="ModalFooter">
-              <h3>Total: $<span id="total">0</span></h3>
-              <button id="orderCart">Ordenar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="modalSocial">
-        <div id="modal-content">
-          <div id="ModalHead">
-            <span id="closeSocial">&times;</span>
-            <h2>Redes Sociales</h2>
-          </div> 
-          <div id="social">
-            <h3>Like</h3>
-            <button>Like</button>
-          </div>
-        </div>
-      </div>
-    
-      <div id="modalBankTag">
-        <div id="modal-content">
-          <div id="ModalHead">
-            <span id="closeBankTag">&times;</span>
-            <h2>BankTag</h2>
-          </div> 
-          <div id="bankTagCardHolder">
-            <h3>Titular</h3>
-            <p>Porfirio Diaz Cortez</p> 
-          </div>
-          <div id="bankTagCardNumber">
-            <h3>Numero de tarjeta</h3>
-            <p id="accountNumber">1234 5678 9012 3456</p>
-            <button id="copy">Copiar</button>
-          </div>
-          <div id="bankTagBank">
-            <h3>Banco</h3>
-            <p>Klar</p>
+    <!-- #region Modals-->
+    <div id="modalSocial">
+      <div id="modal-content">
+        <div id="ModalHead">
+          <span id="closeSocial">&times;</span>
+          <h2>Siguenos!</h2>
+        </div> 
+        <div id="social"> 
+          <button class="socialBtn fb">Fb</button>
+          <button class="socialBtn tiktok">TT</button>
         </div>
       </div>
     </div> 
+    
+    <div id="modalBankTag">
+      <div id="modal-content">
+        <div id="ModalHead">
+          <span id="closeBankTag">&times;</span>
+          <h2>BankTag</h2>
+        </div>
+
+        <div id="bankTagCardHolder">
+          <h3>Titular</h3>
+          <p>Porfirio Diaz Cortez</p> 
+        </div>
+        
+        <div id="bankTagCardNumber">
+          <h3>Numero de tarjeta</h3>
+          <div id="cardData">
+            <p id="accountNumber">1234 5678 9012 3456</p>
+            <button id="copyAccount"></button>
+          </div> 
+        </div>
+        
+        <div id="bankTagBank">
+          <h3>Banco</h3>
+          <p>Klar</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalOrder">
+      <div id="modal-content">
+        <div id="ModalHead">
+          <span id="closeCart">&times;</span>
+          <h2>Orden</h2>
+        </div> 
+        <div id="cart">
+          <div class="cartItem">
+            <div class="cartQuantity">2</div>
+            <h4>Taco de Birria</h4>
+            <h3>60</h3>
+            <button class="addItem"></button>
+            <span></span>
+            <button class="removeItem"></button>
+          </div>
+
+          <div class="cartItem">
+            <div class="cartQuantity">2</div>
+            <h4>Taco de Birria</h4>
+            <h3>60</h3>
+            <button class="addItem"></button>
+            <span></span>
+            <button class="removeItem"></button>
+          </div>
+          <div id="ModalFooter">
+            <h3>Total: $<span id="total">0</span></h3>
+            <button id="orderCart">Ordenar</button>
+          </div>
+        </div>
+      </div>
+    </div> 
+    
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

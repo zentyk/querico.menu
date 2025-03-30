@@ -48,21 +48,6 @@
   letter-spacing: 5px;
 }
 
-.food-items{
-  display: grid;
-  position: relative;
-  grid-template-rows: auto 1fr;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  margin-right: 5em;
-}
-
-.food-items img{
-  position: relative;
-  width: 100%;
-  border-radius: 15px 15px 0 0;
-}
-
 h1{
   grid-column: 1/-1;
   text-align: center;
@@ -126,9 +111,21 @@ h1{
   right: 1%;
 }
 
+#ShowMap img {
+  width: 100%;
+  height: 80%;
+  border-radius: 100%;
+}
+
 #ShowSocial{
   bottom: 50%;
   right: 1%;
+}
+
+#ShowSocial img {
+  width: 100%;
+  height: 80%;
+  border-radius: 100%;
 }
 
 #ShowCart{
@@ -136,9 +133,21 @@ h1{
   right: 1%;
 }
 
+#ShowCart img {
+  width: 100%;
+  height: 80%;
+  border-radius: 100%;
+}
+
 #ShowBankTag{
   bottom: 40%;
   right: 1%;
+}
+
+#ShowBankTag img {
+  width: 100%;
+  height: 80%;
+  border-radius: 100%;
 }
 
 #modalOrder{
@@ -224,6 +233,64 @@ h1{
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+}
+
+#social {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.socialBtn {
+  background-color: #cb202d;
+  border: none;
+  color: #fff; 
+  border-radius: 100%;
+  width: 4rem;
+  height: 4rem;
+}
+
+#bankTagCardHolder {
+  width: 100%;
+  text-align: left;
+}
+
+#bankTagCardNumber { 
+  width: 100%; 
+  border-radius: 100%; 
+  text-align: left;
+}
+
+#cardData {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#cardData button {
+  height: 2rem;
+  width: 2rem;
+  background-color: #cb202d;
+  border: none;
+  border-radius: 100%;
+}
+
+.addItem {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+  border: none;
+  background-color: #cb202d;
+}
+
+.removeItem {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+  border: none;
+  background-color: #cb202d;
 }
 
 @media (prefers-color-scheme: light) {

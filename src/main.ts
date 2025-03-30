@@ -1,6 +1,6 @@
+import DishComponent from './components/dishComponent';
+import MenuLogic from './logic/menuLogic';
 import './style.css';
-
-let button = document.getElementById('platillo1');
 
 let showMapButton = document.getElementById('ShowMap');
 let showCartButton = document.getElementById('ShowCart');
@@ -18,12 +18,19 @@ let modals = [
   'modalBankTag', 
 ]
 
-//#region CartBehavior
-if (button) {
-  button.addEventListener('click', () => {
-    console.log('agregado taco de birria') 
-  });
-}
+//#region Menu
+window.customElements.define('dish-component', DishComponent);
+
+let menuLogic = new MenuLogic();
+
+setTimeout(() => {
+  menuLogic.getDishes()
+}, 1000);
+
+setTimeout(() => {
+  menuLogic.generateDishes();
+}, 1000);
+
 //#endregion
 
 //#region Modal BankTag
