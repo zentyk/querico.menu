@@ -4,11 +4,11 @@ import OrderLogic from "./orderLogic";
 export default class MenuLogic {
     public dishes: Dish[] = [];
     public dishesComponents : HTMLElement[] = [];
-    private orderLogic: OrderLogic;
+    public orderLogic: OrderLogic; 
 
     constructor() {
         this.loadDishes(); 
-        this.orderLogic = new OrderLogic();
+        this.orderLogic = new OrderLogic();   
     } 
 
     getDishes() {  
@@ -48,5 +48,5 @@ export default class MenuLogic {
         const response = await fetch('./assets/data.json');
         const data = await response.json();
         this.dishes = data;
-    }
+    } 
 }

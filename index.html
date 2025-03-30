@@ -12,7 +12,8 @@
         <h1>Birria los panchos</h1>
         <h3>&mdash; Menu &mdash;</h3>
       </div>
-    </div>   
+    </div>
+
     <!--Region Buttons-->
     <button class="interactionButton" id="ShowMap">
       <img src="./assets/icons/locationIcon.png" alt="location icon"/> 
@@ -78,32 +79,15 @@
           <span id="closeCart">&times;</span>
           <h2>Orden</h2>
         </div> 
-        <div id="cart">
-          <div class="cartItem">
-            <div class="cartQuantity">2</div>
-            <h4>Taco de Birria</h4>
-            <h3>60</h3>
-            <button class="addItem"></button>
-            <span></span>
-            <button class="removeItem"></button>
-          </div>
-
-          <div class="cartItem">
-            <div class="cartQuantity">2</div>
-            <h4>Taco de Birria</h4>
-            <h3>60</h3>
-            <button class="addItem"></button>
-            <span></span>
-            <button class="removeItem"></button>
-          </div>
+        <div id="cart"> 
+        </div>
           <div id="ModalFooter">
-            <h3>Total: $<span id="total">0</span></h3>
+            <h3><span id="total">0</span></h3>
             <button id="orderCart">Ordenar</button>
           </div>
-        </div>
+        
       </div>
-    </div> 
-    
+    </div>  
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

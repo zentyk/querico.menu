@@ -32,6 +32,46 @@ export default class DishComponent extends HTMLElement{
                     width: 100%;
                     border-radius: 15px 15px 0 0;
                 }
+                    
+                .details{
+                    padding: 20px 10px;
+                    display: grid;
+                    grid-template-rows: auto 1fr 50px;
+                    grid-row-gap: 15px;
+                }
+
+                .details-sub{
+                    display: grid;
+                    grid-template-columns: auto auto;
+                    }
+
+                .details-sub>h5{
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+
+                .price{
+                    text-align: right;
+                    font-size: 18px;
+                }
+
+                .details>p{
+                    color: #6f6f6f;
+                    font-size: 15px;
+                    line-height: 28px;
+                    font-weight: 400;
+                    align-self: stretch;
+                }
+
+                .details>button{
+                    background-color:#cb202d;
+                    border:none;
+                    color: #fff;
+                    font-size: 16px;
+                    font-weight: 600;
+                    border-radius: 5px;
+                    width: 180px;
+                }
                 </style>
 
                 <div class="food-items">

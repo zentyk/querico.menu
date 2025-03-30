@@ -1,4 +1,6 @@
+import AlertComponent from './components/alertComponent';
 import DishComponent from './components/dishComponent';
+import OrderedDishComponent from './components/orderedDishComponent';
 import MenuLogic from './logic/menuLogic';
 import './style.css';
 
@@ -11,6 +13,12 @@ let closeCartButton = document.getElementById('closeCart');
 let closeSocialButton = document.getElementById('closeSocial');
 let closeBankTagButton = document.getElementById('closeBankTag');
 
+window.customElements.define('dish-component', DishComponent);
+window.customElements.define('ordered-dish-component', OrderedDishComponent);
+window.customElements.define('alert-component', AlertComponent);
+
+let alertComponent = document.createElement('alert-component') as HTMLElement;
+
 let modals = [
   'modalMap',
   'modalOrder',
@@ -19,7 +27,7 @@ let modals = [
 ]
 
 //#region Menu
-window.customElements.define('dish-component', DishComponent);
+
 
 let menuLogic = new MenuLogic();
 
@@ -63,7 +71,16 @@ if(copyAccountButton) {
       let accountText = account.innerText.replace(/\s/g, '');
 
       navigator.clipboard.writeText(accountText);
-      alert('Cuenta copiada al portapapeles');
+       
+      if(alertComponent) alertComponent.remove();
+      alertComponent = document.createElement('alert-component') as HTMLElement;
+      alertComponent.setAttribute('alert-message', 'Número de cuenta copiado');
+      alertComponent.setAttribute('alert-type', 'success');
+      document.body.appendChild(alertComponent); 
+
+      setTimeout(() => {
+        alertComponent.remove();
+      }, 1000);
     } 
   });
 }
@@ -101,12 +118,14 @@ if(closeSocialButton) {
 //#endregion
 
 //#region Modal Order
+
 if (showCartButton) {
   showCartButton.addEventListener('click', () => {
     let modal = document.getElementById(modals[1]);
 
     if (modal) {
       modal.style.display = 'block';
+      menuLogic.orderLogic.getOrder();
     }
   });
 }
@@ -124,7 +143,10 @@ if(closeCartButton) {
 let orderCart = document.getElementById('orderCart');
 if(orderCart) {
   orderCart.addEventListener('click', () => {
-    let message = "Hola, me gustaría ordenar:%0a* 2 Tacos de Birria"; 
+
+    let orderData = menuLogic.orderLogic.formatOrderUrlText();
+
+    let message = `Hola, me gustaría ordenar:${orderData}`; 
 
     window.open(`https://wa.me/+525619331064?text=${message}`);
 
