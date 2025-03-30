@@ -51,14 +51,16 @@ export default class OrderLogic {
                 
                 orderCart.appendChild(dishComponent);
 
-                dishComponent.addEventListener('add-to-order', (event: CustomEvent) => {
-                    const dishId = event.detail.id;
+                dishComponent.addEventListener('add-to-order', (event: Event) => {
+                    const customEvent = event as CustomEvent;
+                    const dishId = customEvent.detail.id;
                     this.addToOrder(new Dish(dishId, dish.name, dish.price,'',''));
                     this.getOrder();
                 });
                 
-                dishComponent.addEventListener('remove-from-order', (event: CustomEvent) => {
-                    const dishId = event.detail.id;
+                dishComponent.addEventListener('remove-from-order', (event: Event) => {
+                    const customEvent = event as CustomEvent;
+                    const dishId = customEvent.detail.id;
                     this.removeFromOrder(dishId);
                     this.getOrder();
                 });

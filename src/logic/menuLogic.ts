@@ -8,7 +8,7 @@ export default class MenuLogic {
 
     constructor() {
         this.loadDishes(); 
-        this.orderLogic = new OrderLogic();   
+        this.orderLogic = new OrderLogic();    
     } 
 
     getDishes() {  
@@ -23,17 +23,18 @@ export default class MenuLogic {
     public generateDishes(){
         const menuContainer = document.getElementsByClassName('menu')[0] as HTMLElement;
         if (menuContainer) {
-            this.dishes.forEach((dish) => {
-                const dishComponent = document.createElement('dish-component') as HTMLElement;
-                dishComponent.setAttribute('dish-name', dish.name);
-                dishComponent.setAttribute('dish-description', dish.description);
-                dishComponent.setAttribute('dish-price', dish.price.toString());
-                dishComponent.setAttribute('dish-image', dish.imageUrl);
-                dishComponent.setAttribute('dish-id', dish.id.toString());
-                menuContainer.appendChild(dishComponent);
+            this.dishes.forEach((dish) => { 
+                let dishTemplate : HTMLElement = document.createElement('dish-component') as HTMLElement;
+                dishTemplate.setAttribute('dish-name', dish.name);
+                dishTemplate.setAttribute('dish-description', dish.description);
+                dishTemplate.setAttribute('dish-price', dish.price.toString());
+                dishTemplate.setAttribute('dish-image', dish.imageUrl);
+                dishTemplate.setAttribute('dish-id', dish.id.toString());
+                menuContainer.appendChild(dishTemplate);
 
-                dishComponent.addEventListener('add-to-order', (event: CustomEvent) => {
-                    const dishId = event.detail.id;
+                dishTemplate.addEventListener('add-to-order', (event: Event) => {
+                    const customEvent = event as CustomEvent;
+                    const dishId = customEvent.detail.id;
                     const dish = this.getDishById(dishId);
 
                     if (dish) { 

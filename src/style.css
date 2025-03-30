@@ -227,7 +227,7 @@ h1{
   background-color: #cb202d;
   border: none;
   border-radius: 100%;
-  background-image: url('./assets/icons/CopyIcon.png');
+  background-image: url('../assets/icons/CopyIcon.png');
   background-size: cover;
 }
 
@@ -238,6 +238,16 @@ alert-component {
   width: 100%;
   height: 4rem; 
   z-index: 1000;
+}
+
+.fb {
+  background : url('../assets/icons/facebookIcon.png') no-repeat center center;
+  background-size: cover;
+}
+
+.tiktok {
+  background : url('../assets/icons/tiktokIcon.png') no-repeat center center;
+  background-size: cover;
 }
 
 
