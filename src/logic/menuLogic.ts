@@ -17,7 +17,9 @@ export default class MenuLogic {
 
     public async init(restaurantId: string | null = null): Promise<void> {
         this.currentRestaurantId = restaurantId;
-        await this.loadDishes(false, restaurantId);
+        // On /restaurant/:id, load directly from the static [id].json file; on /demo, allow localStorage draft preview
+        const ignoreLocalDraft = restaurantId !== null;
+        await this.loadDishes(ignoreLocalDraft, restaurantId);
         this.applyRestaurantConfig();
         this.generateDishes();
     }
@@ -37,13 +39,8 @@ export default class MenuLogic {
 
     public saveCustomConfig(newConfig: RestaurantConfig) {
         this.config = this.normalizeConfig(newConfig);
-        if (this.config.restaurantId) {
-            this.currentRestaurantId = this.config.restaurantId;
-        }
         this.dishes = this.config.dishes;
         try {
-            const specificKey = this.getStorageKey(this.config.restaurantId);
-            localStorage.setItem(specificKey, JSON.stringify(this.config));
             localStorage.setItem(CUSTOM_CONFIG_STORAGE_KEY, JSON.stringify(this.config));
         } catch {
             // Ignore quota errors

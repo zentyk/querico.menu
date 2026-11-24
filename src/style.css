@@ -41,6 +41,10 @@ body {
   flex-wrap: wrap;
 }
 
+.demo-banner[hidden] {
+  display: none !important;
+}
+
 .demo-banner-text {
   font-size: 0.9rem;
   color: #d4d4d4;

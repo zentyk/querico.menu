@@ -19,8 +19,8 @@ const cartBadge = document.getElementById('cartBadge');
 const menuView = document.getElementById('menuView');
 const builderView = document.getElementById('builderView');
 const printView = document.getElementById('printView');
+const demoBanner = document.getElementById('demoBanner');
 const designMenuBtn = document.getElementById('designMenuBtn');
-const printPreviewBtn = document.getElementById('printPreviewBtn');
 
 window.customElements.define('dish-component', DishComponent);
 window.customElements.define('ordered-dish-component', OrderedDishComponent);
@@ -66,35 +66,31 @@ let printPreview: PrintPreview | null = null;
 interface ParsedRoute {
   view: 'menu' | 'builder' | 'print';
   restaurantId: string | null;
+  isDemoRoute: boolean;
 }
 
 function parseRoute(pathname: string): ParsedRoute {
   const clean = pathname.replace(/\/+$/, '') || '/';
   const segments = clean.split('/').filter(Boolean);
 
-  // Check /restaurant/:id[/disena | /print-preview]
+  // Customer-facing route: /restaurant/:id (pure menu only, no demo banner or builder)
   if (segments[0]?.toLowerCase() === 'restaurant' && segments[1]) {
     const restaurantId = decodeURIComponent(segments[1]);
-    const sub = segments[2]?.toLowerCase();
-    if (sub === 'disena' || sub === 'builder') {
-      return { view: 'builder', restaurantId };
-    }
-    if (sub === 'print-preview' || sub === 'print') {
-      return { view: 'print', restaurantId };
-    }
-    return { view: 'menu', restaurantId };
+    return { view: 'menu', restaurantId, isDemoRoute: false };
   }
 
-  // Check /demo/disena, /disena, /demo/print-preview, /print-preview
+  // Demo builder & print-preview routes accessed from /demo -> "Diseña tu menú"
   const last = segments[segments.length - 1]?.toLowerCase();
   if (last === 'disena' || last === 'builder') {
-    return { view: 'builder', restaurantId: menuLogic.currentRestaurantId };
+    return { view: 'builder', restaurantId: null, isDemoRoute: true };
   }
   if (last === 'print-preview' || last === 'print') {
-    return { view: 'print', restaurantId: menuLogic.currentRestaurantId };
+    return { view: 'print', restaurantId: null, isDemoRoute: true };
   }
 
-  return { view: 'menu', restaurantId: null };
+  // Show demo banner on /demo (and root / which acts as demo entry)
+  const isDemo = segments.length === 0 || segments[0]?.toLowerCase() === 'demo';
+  return { view: 'menu', restaurantId: null, isDemoRoute: isDemo };
 }
 
 function navigateTo(path: string) {
@@ -104,10 +100,15 @@ function navigateTo(path: string) {
 }
 
 async function handleRouteChange() {
-  const { view, restaurantId } = parseRoute(window.location.pathname);
+  const { view, restaurantId, isDemoRoute } = parseRoute(window.location.pathname);
 
   if (restaurantId !== menuLogic.currentRestaurantId) {
     await menuLogic.init(restaurantId);
+  }
+
+  // Only show "¿Tienes un restaurante o negocio de comida? ✨ Diseña tu menú" on /demo (never on /restaurant/:id)
+  if (demoBanner) {
+    demoBanner.hidden = !isDemoRoute || restaurantId !== null;
   }
 
   if (menuView) menuView.hidden = view !== 'menu';
@@ -119,8 +120,8 @@ async function handleRouteChange() {
       menuBuilder = new MenuBuilder(
         builderView,
         menuLogic,
-        (targetId) => navigateTo(targetId ? `/restaurant/${encodeURIComponent(targetId)}` : '/demo'),
-        (targetId) => navigateTo(targetId ? `/restaurant/${encodeURIComponent(targetId)}/print-preview` : '/demo/print-preview')
+        () => navigateTo('/demo'),
+        () => navigateTo('/demo/print-preview')
       );
     }
     menuBuilder.open();
@@ -129,14 +130,8 @@ async function handleRouteChange() {
       printPreview = new PrintPreview(
         printView,
         menuLogic,
-        () => {
-          const id = menuLogic.currentRestaurantId;
-          navigateTo(id ? `/restaurant/${encodeURIComponent(id)}` : '/demo');
-        },
-        () => {
-          const id = menuLogic.currentRestaurantId;
-          navigateTo(id ? `/restaurant/${encodeURIComponent(id)}/disena` : '/demo/disena');
-        }
+        () => navigateTo('/demo'),
+        () => navigateTo('/demo/disena')
       );
     }
     printPreview.open();
@@ -149,15 +144,7 @@ window.addEventListener('popstate', () => {
 
 if (designMenuBtn) {
   designMenuBtn.addEventListener('click', () => {
-    const id = menuLogic.currentRestaurantId;
-    navigateTo(id ? `/restaurant/${encodeURIComponent(id)}/disena` : '/demo/disena');
-  });
-}
-
-if (printPreviewBtn) {
-  printPreviewBtn.addEventListener('click', () => {
-    const id = menuLogic.currentRestaurantId;
-    navigateTo(id ? `/restaurant/${encodeURIComponent(id)}/print-preview` : '/demo/print-preview');
+    navigateTo('/demo/disena');
   });
 }
 
