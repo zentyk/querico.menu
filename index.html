@@ -1,93 +1,129 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logoRikoMenu.png" />
+    <link rel="icon" type="image/png" href="/logoRikoMenu.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RikoMenu - DEMO</title>
+    <title>RikoMenu - Birria Los Panchos</title>
   </head>
   <body> 
-    <div class="menu">
-      <div class="heading">
-        <h1>Birria los panchos</h1>
-        <h3>&mdash; Menu &mdash;</h3>
+    <!-- #region Public Menu View (/, /demo, /restaurant/:id) -->
+    <div id="menuView">
+      <div class="demo-banner" id="demoBanner">
+        <span class="demo-banner-text" id="demoBannerText">¿Tienes un restaurante o negocio de comida?</span>
+        <div class="demo-banner-actions">
+          <button id="designMenuBtn" class="design-menu-cta" type="button">✨ Diseña tu menú</button>
+          <button id="printPreviewBtn" class="print-menu-cta" type="button">🖨️ Vista de Impresión</button>
+        </div>
       </div>
-    </div>
 
-    <!--Region Buttons-->
-    <button class="interactionButton" id="ShowMap">
-      <img src="./assets/icons/locationIcon.png" alt="location icon"/> 
-    </button>
-    
-    <button class="interactionButton" id="ShowSocial">
-      <img src="./assets/icons/likeIcon.png" alt="social icon"/>
-    </button>
-  
-    <button class="interactionButton" id="ShowBankTag">
-      <img src="./assets/icons/payIcon.png" alt="bank tag icon"/>
-    </button>
+      <header class="heading">
+        <h1 id="restaurantName">Birria Los Panchos</h1>
+        <h3 id="restaurantSubtitle">&mdash; Menú Digital &mdash;</h3>
+      </header>
+
+      <main class="menu-wrapper">
+        <div class="menu"></div>
+      </main>
+
+      <!-- Floating Action Dock -->
+      <nav class="fab-dock" aria-label="Acciones rápidas">
+        <button class="interactionButton" id="ShowMap" type="button" title="Ver ubicación en Google Maps" aria-label="Ver ubicación">
+          <img src="/assets/icons/locationIcon.png" alt="Ubicación"/> 
+        </button>
+        
+        <button class="interactionButton" id="ShowSocial" type="button" title="Redes sociales" aria-label="Redes sociales">
+          <img src="/assets/icons/likeIcon.png" alt="Redes sociales"/>
+        </button>
       
-    <button class="interactionButton" id="ShowCart">
-      <img src="./assets/icons/orderIcon.png" alt="cart icon"/>
-    </button>
-    <!--End Region Buttons-->
+        <button class="interactionButton" id="ShowBankTag" type="button" title="Datos de transferencia bancaria" aria-label="Datos bancarios">
+          <img src="/assets/icons/payIcon.png" alt="Pago por transferencia"/>
+        </button>
+          
+        <button class="interactionButton" id="ShowCart" type="button" title="Ver tu orden" aria-label="Ver tu orden">
+          <img src="/assets/icons/orderIcon.png" alt="Carrito de orden"/>
+          <span id="cartBadge" class="cart-badge" hidden>0</span>
+        </button>
+      </nav>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region Builder Route View (/demo/disena, /disena) -->
+    <div id="builderView" hidden></div>
+    <!-- #endregion -->
+
+    <!-- #region Print Preview Route View (/print-preview, /demo/print-preview, /restaurant/:id/print-preview) -->
+    <div id="printView" hidden></div>
+    <!-- #endregion -->
     
-    <!-- #region Modals-->
-    <div id="modalSocial">
-      <div id="modal-content">
-        <div id="ModalHead">
-          <span id="closeSocial">&times;</span>
-          <h2>Siguenos!</h2>
+    <!-- #region Modals -->
+    <div id="modalSocial" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalSocialTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalSocialTitle">¡Síguenos!</h2>
+          <button id="closeSocial" class="modal-close" type="button" aria-label="Cerrar">&times;</button>
         </div> 
+        <p class="modal-subtitle">Descubre nuestras promociones y novedades en redes sociales.</p>
         <div id="social"> 
-          <button class="socialBtn fb"></button>
-          <button class="socialBtn tiktok"></button>
+          <a id="socialFb" class="socialBtn fb" href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a>
+          <a id="socialTiktok" class="socialBtn tiktok" href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"></a>
+          <a id="socialInstagram" class="socialBtn ig" href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="display: none;">IG</a>
         </div>
       </div>
     </div> 
     
-    <div id="modalBankTag">
-      <div id="modal-content">
-        <div id="ModalHead">
-          <span id="closeBankTag">&times;</span>
-          <h2>BankTag</h2>
+    <div id="modalBankTag" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalBankTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalBankTitle">Pago con Transferencia</h2>
+          <button id="closeBankTag" class="modal-close" type="button" aria-label="Cerrar">&times;</button>
         </div>
 
-        <div id="bankTagCardHolder">
-          <h3>Titular</h3>
-          <p>Porfirio Diaz Cortez</p> 
-        </div>
-        
-        <div id="bankTagCardNumber">
-          <h3>Numero de tarjeta</h3>
-          <div id="cardData">
-            <p id="accountNumber">1234 5678 9012 3456</p>
-            <button id="copyAccount"></button>
-          </div> 
-        </div>
-        
-        <div id="bankTagBank">
-          <h3>Banco</h3>
-          <p>Klar</p>
+        <div class="bank-card">
+          <div class="bank-field" id="bankTagBank">
+            <span class="bank-label">Banco</span>
+            <p class="bank-value" id="bankNameValue">Klar</p>
+          </div>
+
+          <div class="bank-field" id="bankTagCardHolder">
+            <span class="bank-label">Titular</span>
+            <p class="bank-value" id="cardHolderValue">Porfirio Díaz Cortez</p> 
+          </div>
+
+          <div class="bank-field" id="bankTagClabe">
+            <span class="bank-label">CLABE Interbancaria (SPEI)</span>
+            <div class="card-data-row">
+              <p id="clabeNumber">646180123456789012</p>
+              <button id="copyClabe" class="copy-icon-btn" type="button" title="Copiar CLABE" aria-label="Copiar CLABE interbancaria"></button>
+            </div>
+          </div>
+          
+          <div class="bank-field" id="bankTagCardNumber">
+            <span class="bank-label">Número de tarjeta / Cuenta</span>
+            <div id="cardData" class="card-data-row">
+              <p id="accountNumber">1234 5678 9012 3456</p>
+              <button id="copyAccount" class="copy-icon-btn" type="button" title="Copiar número" aria-label="Copiar número de cuenta"></button>
+            </div> 
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="modalOrder">
-      <div id="modal-content">
-        <div id="ModalHead">
-          <span id="closeCart">&times;</span>
-          <h2>Orden</h2>
+    <div id="modalOrder" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalOrderTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalOrderTitle">Tu Orden</h2>
+          <button id="closeCart" class="modal-close" type="button" aria-label="Cerrar">&times;</button>
         </div> 
-        <div id="cart"> 
+        <div id="cart"></div>
+        <div id="ModalFooter" class="modal-footer">
+          <h3><span id="total">Total: $0.00</span></h3>
+          <button id="orderCart" type="button">Ordenar por WhatsApp</button>
         </div>
-          <div id="ModalFooter">
-            <h3><span id="total">0</span></h3>
-            <button id="orderCart">Ordenar</button>
-          </div>
-        
       </div>
     </div>  
+    <!-- #endregion -->
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -1,4 +1,8 @@
-export default class DishComponent extends HTMLElement{
+export default class DishComponent extends HTMLElement {
+    static get observedAttributes() {
+        return ['dish-name', 'dish-description', 'dish-price', 'dish-image', 'dish-id'];
+    }
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' }); 
@@ -8,84 +12,161 @@ export default class DishComponent extends HTMLElement{
         this.render();
     }
 
+    attributeChangedCallback() {
+        if (this.isConnected) {
+            this.render();
+        }
+    }
+
     render() {
-        const dishName = this.getAttribute('dish-name');
-        const dishDescription = this.getAttribute('dish-description');
-        const dishPrice = this.getAttribute('dish-price');
-        const dishImage = this.getAttribute('dish-image');
-        const dishId = this.getAttribute('dish-id');
+        const dishName = this.getAttribute('dish-name') || '';
+        const dishDescription = this.getAttribute('dish-description') || '';
+        const rawPrice = parseFloat(this.getAttribute('dish-price') || '0');
+        const formattedPrice = Number.isFinite(rawPrice) ? rawPrice.toFixed(2) : '0.00';
+        const dishImage = (this.getAttribute('dish-image') || '').trim();
+        const dishId = this.getAttribute('dish-id') || '';
+        const hasImage = dishImage.length > 0;
 
         if (this.shadowRoot) {
             this.shadowRoot.innerHTML = `
                 <style>
-                .food-items{
-                    display: grid;
-                    position: relative;
-                    grid-template-rows: auto 1fr;
-                    border-radius: 15px;
-                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-                    margin-right: 5em;
+                :host {
+                    display: block;
                 }
 
-                .food-items img{
+                .food-items {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    background-color: var(--card-bg, #2c2c2c);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+                    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+                }
+
+                .food-items:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38);
+                    border-color: var(--primary-color, #cb202d);
+                }
+
+                .image-wrapper {
                     position: relative;
                     width: 100%;
-                    border-radius: 15px 15px 0 0;
+                    height: 210px;
+                    overflow: hidden;
+                    background-color: #1f1f1f;
+                }
+
+                .food-items img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    transition: transform 0.35s ease;
+                }
+
+                .food-items:hover img {
+                    transform: scale(1.04);
                 }
                     
-                .details{
-                    padding: 20px 10px;
-                    display: grid;
-                    grid-template-rows: auto 1fr 50px;
-                    grid-row-gap: 15px;
+                .details {
+                    padding: 18px 20px 20px;
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                    gap: 12px;
                 }
 
-                .details-sub{
-                    display: grid;
-                    grid-template-columns: auto auto;
-                    }
-
-                .details-sub>h5{
-                    font-weight: 600;
-                    font-size: 18px;
+                .details-sub {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    gap: 12px;
                 }
 
-                .price{
-                    text-align: right;
-                    font-size: 18px;
+                .details-sub h5 {
+                    margin: 0;
+                    font-weight: 700;
+                    font-size: 1.15rem;
+                    color: #ffffff;
+                    line-height: 1.3;
                 }
 
-                .details>p{
-                    color: #6f6f6f;
-                    font-size: 15px;
-                    line-height: 28px;
+                .price {
+                    margin: 0;
+                    font-size: 1.05rem;
+                    font-weight: 700;
+                    color: #ffffff;
+                    background-color: var(--primary-color, #cb202d);
+                    padding: 4px 10px;
+                    border-radius: 999px;
+                    white-space: nowrap;
+                }
+
+                .details p {
+                    margin: 0;
+                    color: #b8b8b8;
+                    font-size: 0.94rem;
+                    line-height: 1.55;
                     font-weight: 400;
-                    align-self: stretch;
+                    flex: 1;
                 }
 
-                .details>button{
-                    background-color:#cb202d;
-                    border:none;
+                .add-btn {
+                    margin-top: 6px;
+                    background-color: var(--primary-color, #cb202d);
+                    border: none;
                     color: #fff;
-                    font-size: 16px;
+                    font-size: 0.95rem;
                     font-weight: 600;
-                    border-radius: 5px;
-                    width: 180px;
+                    border-radius: 10px;
+                    width: 100%;
+                    padding: 12px 16px;
+                    cursor: pointer;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    transition: filter 0.2s ease, transform 0.1s ease;
+                }
+
+                .add-btn:hover {
+                    filter: brightness(1.12);
+                }
+
+                .add-btn:active {
+                    transform: scale(0.98);
                 }
                 </style>
 
-                <div class="food-items">
-                    <img src="${dishImage}" alt="">
+                <article class="food-items">
+                    ${hasImage ? `
+                    <div class="image-wrapper" id="imgWrap${dishId}">
+                        <img src="${dishImage}" alt="${dishName}" loading="lazy">
+                    </div>` : ''}
                     <div class="details">
                         <div class="details-sub">
                             <h5>${dishName}</h5>
-                            <h2 class="price">${dishPrice}</h2>
+                            <span class="price">$${formattedPrice}</span>
                         </div>
                         <p>${dishDescription}</p>
-                        <button id="dish${dishId}">Agregar a la orden</button>
+                        <button class="add-btn" id="dish${dishId}" type="button">
+                            <span>+ Agregar a la orden</span>
+                        </button>
                     </div>
-                </div>`;
+                </article>`;
                 
+            const imgEl = this.shadowRoot.querySelector('img');
+            if (imgEl) {
+                imgEl.addEventListener('error', () => {
+                    const wrap = this.shadowRoot?.getElementById(`imgWrap${dishId}`);
+                    if (wrap) wrap.style.display = 'none';
+                });
+            }
+
             const button = this.shadowRoot.getElementById(`dish${dishId}`);
             
             if (button) {
@@ -95,7 +176,7 @@ export default class DishComponent extends HTMLElement{
                             id: dishId,
                             name: dishName,
                             description: dishDescription,
-                            price: dishPrice,
+                            price: formattedPrice,
                             imageUrl: dishImage
                         }
                     });
