@@ -68,10 +68,14 @@ export default class MenuBuilder {
                     <span class="dish-badge">Platillo #${index + 1}</span>
                     <button type="button" class="remove-dish-btn" data-remove-idx="${index}">Eliminar</button>
                 </div>
-                <div class="builder-grid-2">
+                <div class="builder-grid-3">
                     <label class="builder-field">
                         <span>Nombre del platillo *</span>
                         <input type="text" class="dish-name-input" data-idx="${index}" value="${this.escapeHtml(dish.name)}" placeholder="Ej. Quesabirria Especial" required />
+                    </label>
+                    <label class="builder-field">
+                        <span>Categoría</span>
+                        <input type="text" class="dish-cat-input" data-idx="${index}" value="${this.escapeHtml(dish.category || 'General')}" placeholder="Ej. Tacos, Bebidas, Postres" />
                     </label>
                     <label class="builder-field">
                         <span>Precio ($) *</span>
@@ -284,11 +288,12 @@ export default class MenuBuilder {
         const updatedDishes: Dish[] = [];
         dishCards.forEach((card, idx) => {
             const name = (card.querySelector('.dish-name-input') as HTMLInputElement)?.value.trim() || `Platillo ${idx + 1}`;
+            const category = (card.querySelector('.dish-cat-input') as HTMLInputElement)?.value.trim() || 'General';
             const rawPrice = parseFloat((card.querySelector('.dish-price-input') as HTMLInputElement)?.value || '0');
             const price = Number.isFinite(rawPrice) && rawPrice >= 0 ? Math.round(rawPrice * 100) / 100 : 0;
             const description = (card.querySelector('.dish-desc-input') as HTMLTextAreaElement)?.value.trim() || '';
             const imageUrl = (card.querySelector('.dish-img-input') as HTMLInputElement)?.value.trim() || '';
-            updatedDishes.push(new Dish(idx + 1, name, price, description, imageUrl));
+            updatedDishes.push(new Dish(idx + 1, name, price, description, imageUrl, category));
         });
 
         this.draft.dishes = updatedDishes;

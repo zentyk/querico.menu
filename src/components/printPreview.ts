@@ -69,18 +69,41 @@ export default class PrintPreview {
         const menuUrl = `${window.location.origin}/restaurant/${encodeURIComponent(restaurantId || '123456789')}`;
         const menuUrlQrSvg = this.showMenuUrlQr ? generateQrSvg(menuUrl, 120) : '';
 
-        const dishesPrintHtml = dishes.map((dish) => {
-            const hasImg = this.showImages && dish.imageUrl && dish.imageUrl.trim().length > 0;
-            return `
-                <div class="print-dish-item">
-                    ${hasImg ? `<img class="print-dish-thumb" src="${this.escapeHtml(dish.imageUrl)}" alt="${this.escapeHtml(dish.name)}" />` : ''}
-                    <div class="print-dish-body">
-                        <div class="print-dish-line">
-                            <span class="print-dish-name">${this.escapeHtml(dish.name)}</span>
-                            <span class="print-dish-dots"></span>
-                            <span class="print-dish-price">$${Number(dish.price).toFixed(2)}</span>
+        // Group dishes by category for print
+        const categoriesMap = new Map<string, typeof dishes>();
+        dishes.forEach(dish => {
+            const cat = (dish.category || 'General').trim() || 'General';
+            if (!categoriesMap.has(cat)) {
+                categoriesMap.set(cat, []);
+            }
+            categoriesMap.get(cat)!.push(dish);
+        });
+
+        const showCategoryHeaders = categoriesMap.size > 1 || !categoriesMap.has('General');
+
+        const dishesPrintHtml = Array.from(categoriesMap.entries()).map(([catName, catDishes]) => {
+            const itemsHtml = catDishes.map((dish) => {
+                const hasImg = this.showImages && dish.imageUrl && dish.imageUrl.trim().length > 0;
+                return `
+                    <div class="print-dish-item">
+                        ${hasImg ? `<img class="print-dish-thumb" src="${this.escapeHtml(dish.imageUrl)}" alt="${this.escapeHtml(dish.name)}" />` : ''}
+                        <div class="print-dish-body">
+                            <div class="print-dish-line">
+                                <span class="print-dish-name">${this.escapeHtml(dish.name)}</span>
+                                <span class="print-dish-dots"></span>
+                                <span class="print-dish-price">$${Number(dish.price).toFixed(2)}</span>
+                            </div>
+                            ${dish.description ? `<p class="print-dish-desc">${this.escapeHtml(dish.description)}</p>` : ''}
                         </div>
-                        ${dish.description ? `<p class="print-dish-desc">${this.escapeHtml(dish.description)}</p>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="print-category-block">
+                    ${showCategoryHeaders ? `<h3 class="print-category-title">${this.escapeHtml(catName)}</h3>` : ''}
+                    <div class="print-dishes-grid">
+                        ${itemsHtml}
                     </div>
                 </div>
             `;
@@ -148,7 +171,7 @@ export default class PrintPreview {
 
                     <section class="print-menu-section">
                         <h2 class="print-section-heading">Nuestro Menú</h2>
-                        <div class="print-dishes-grid">
+                        <div class="print-categories-wrapper">
                             ${dishesPrintHtml}
                         </div>
                     </section>

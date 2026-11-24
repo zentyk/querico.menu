@@ -8,6 +8,7 @@ export default class MenuLogic {
     public config: RestaurantConfig = structuredClone(DEFAULT_RESTAURANT_CONFIG);
     public currentRestaurantId: string | null = null;
     public dishes: Dish[] = [];
+    public activeCategory = 'Todos';
     public dishesComponents: HTMLElement[] = [];
     public orderLogic: OrderLogic; 
 
@@ -92,7 +93,8 @@ export default class MenuLogic {
                     String(d.name ?? ''),
                     Number(d.price ?? 0),
                     String(d.description ?? ''),
-                    String(d.imageUrl ?? '')
+                    String(d.imageUrl ?? ''),
+                    String(d.category || 'General')
                 ))
             };
         }
@@ -106,7 +108,8 @@ export default class MenuLogic {
                 String(d.name ?? ''),
                 Number(d.price ?? 0),
                 String(d.description ?? ''),
-                String(d.imageUrl ?? '')
+                String(d.imageUrl ?? ''),
+                String(d.category || 'General')
             ))
             : structuredClone(def.dishes);
 
@@ -204,22 +207,37 @@ export default class MenuLogic {
         return this.dishes.find(dish => Number(dish.id) === id);
     }
 
+    public getCategories(): string[] {
+        const set = new Set<string>();
+        this.dishes.forEach(d => {
+            const cat = (d.category || 'General').trim();
+            if (cat) set.add(cat);
+        });
+        return Array.from(set);
+    }
+
     public generateDishes() {
         const menuContainer = document.querySelector('.menu') as HTMLElement | null;
         if (!menuContainer) return;
 
+        this.renderCategoryBar();
+
         menuContainer.querySelectorAll('dish-component, .menu-status').forEach(el => el.remove());
         this.dishesComponents = [];
 
-        if (this.dishes.length === 0) {
+        const filteredDishes = this.activeCategory === 'Todos'
+            ? this.dishes
+            : this.dishes.filter(d => (d.category || 'General').trim() === this.activeCategory);
+
+        if (filteredDishes.length === 0) {
             const emptyMsg = document.createElement('p');
             emptyMsg.className = 'menu-status';
-            emptyMsg.textContent = 'No hay platillos disponibles en este momento.';
+            emptyMsg.textContent = 'No hay platillos disponibles en esta categoría.';
             menuContainer.appendChild(emptyMsg);
             return;
         }
 
-        this.dishes.forEach((dish) => { 
+        filteredDishes.forEach((dish) => { 
             const dishTemplate = document.createElement('dish-component') as HTMLElement;
             dishTemplate.setAttribute('dish-name', dish.name);
             dishTemplate.setAttribute('dish-description', dish.description);
@@ -237,6 +255,38 @@ export default class MenuLogic {
                 if (selectedDish) { 
                     this.orderLogic.addToOrder(selectedDish);
                 }
+            });
+        });
+    }
+
+    private renderCategoryBar() {
+        const barContainer = document.getElementById('categoryFilterBar');
+        if (!barContainer) return;
+
+        const categories = this.getCategories();
+        if (categories.length <= 1) {
+            barContainer.hidden = true;
+            barContainer.innerHTML = '';
+            return;
+        }
+
+        if (this.activeCategory !== 'Todos' && !categories.includes(this.activeCategory)) {
+            this.activeCategory = 'Todos';
+        }
+
+        const allTabs = ['Todos', ...categories];
+        barContainer.hidden = false;
+        barContainer.innerHTML = allTabs.map(cat => `
+            <button type="button" class="category-pill ${this.activeCategory === cat ? 'active' : ''}" data-category="${cat.replace(/"/g, '&quot;')}">
+                ${cat}
+            </button>
+        `).join('');
+
+        barContainer.querySelectorAll('.category-pill').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const selected = (btn as HTMLElement).dataset.category || 'Todos';
+                this.activeCategory = selected;
+                this.generateDishes();
             });
         });
     }

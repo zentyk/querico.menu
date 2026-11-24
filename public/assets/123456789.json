@@ -26,21 +26,24 @@
       "name": "Taco de Birria",
       "description": "A traditional Mexican dish made with slow-cooked beef, spices, and served in a corn tortilla.",
       "price": 10.99,
-      "imageUrl": "/assets/platillos/birria.jpg"
+      "imageUrl": "/assets/platillos/birria.jpg",
+      "category": "Tacos"
     },
     {
       "id": 2,
       "name": "Taco de Pescado",
       "description": "A delicious fish taco topped with cabbage, salsa, and a creamy sauce.",
       "price": 12.99,
-      "imageUrl": "/assets/platillos/birria.jpg"
+      "imageUrl": "/assets/platillos/birria.jpg",
+      "category": "Especialidades"
     },
     {
       "id": 3,
       "name": "Taco al Pastor",
       "description": "A popular Mexican taco made with marinated pork, pineapple, and onions.",
       "price": 11.99,
-      "imageUrl": ""
+      "imageUrl": "",
+      "category": "Tacos"
     }
   ]
 }

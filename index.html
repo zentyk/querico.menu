@@ -22,6 +22,7 @@
       </header>
 
       <main class="menu-wrapper">
+        <div id="categoryFilterBar" class="category-pills-bar" hidden></div>
         <div class="menu"></div>
       </main>
 
@@ -109,16 +110,56 @@
     </div>
 
     <div id="modalOrder" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalOrderTitle">
-      <div class="modal-content">
+      <div class="modal-content modal-order-content">
         <div class="modal-header">
           <h2 id="modalOrderTitle">Tu Orden</h2>
           <button id="closeCart" class="modal-close" type="button" aria-label="Cerrar">&times;</button>
         </div> 
         <div id="cart"></div>
+
+        <!-- Checkout Fulfillment & Notes Section -->
+        <div id="checkoutDetailsSection" class="checkout-section">
+          <div class="fulfillment-tabs" role="tablist" aria-label="Modalidad de entrega">
+            <button type="button" class="fulfillment-tab active" data-mode="dine_in">🍽️ En Mesa</button>
+            <button type="button" class="fulfillment-tab" data-mode="pickup">🛍️ Para Llevar</button>
+            <button type="button" class="fulfillment-tab" data-mode="delivery">🛵 A Domicilio</button>
+          </div>
+
+          <div class="checkout-fields-grid">
+            <input type="text" id="checkoutCustomerName" class="checkout-input" placeholder="Tu nombre (Ej. Carlos)" />
+            <input type="text" id="checkoutTableNumber" class="checkout-input" placeholder="Nº de Mesa (Ej. Mesa 4)" />
+            <input type="text" id="checkoutDeliveryAddress" class="checkout-input full-span" placeholder="Dirección completa y referencias" hidden />
+          </div>
+
+          <div class="checkout-row-split">
+            <div class="payment-method-selector">
+              <span class="checkout-mini-label">Pago:</span>
+              <button type="button" class="payment-chip active" data-pay="cash">💵 Efectivo</button>
+              <button type="button" class="payment-chip" data-pay="spei">🏦 Transferencia</button>
+            </div>
+          </div>
+
+          <input type="text" id="checkoutOrderNotes" class="checkout-input full-span" placeholder="Notas de cocina (Ej. Con todo, sin cebolla, salsa aparte...)" />
+        </div>
+
         <div id="ModalFooter" class="modal-footer">
           <h3><span id="total">Total: $0.00</span></h3>
-          <button id="orderCart" type="button">Ordenar por WhatsApp</button>
+          <div class="order-action-btns">
+            <button id="showOrderQrBtn" class="order-qr-btn" type="button" title="Generar código QR de la orden para mostrar al mesero">📱 QR de Orden</button>
+            <button id="orderCart" type="button">Ordenar por WhatsApp</button>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Modal: Order QR Ticket (Customer shows to Waiter OR Waiter scans URL) -->
+    <div id="modalOrderQr" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalOrderQrTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalOrderQrTitle">📱 Código QR de tu Orden</h2>
+          <button id="closeOrderQr" class="modal-close" type="button" aria-label="Cerrar">&times;</button>
+        </div>
+        <div id="orderQrContainer" class="order-qr-modal-body"></div>
       </div>
     </div>  
     <!-- #endregion -->
